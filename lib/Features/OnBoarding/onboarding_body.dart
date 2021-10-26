@@ -115,7 +115,7 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
 class  HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body:HomeScreenUser(),
     );
   }

@@ -26,7 +26,7 @@ class LoginScreenBody extends StatelessWidget {
       );
     }
     void goToUserScreen() {
-      Get.to(() => const HomeScreenUser(), transition: Transition.fadeIn);
+      Get.to(() => HomeScreenUser(), transition: Transition.fadeIn);
     }
 
     void goToAdminScreen() {

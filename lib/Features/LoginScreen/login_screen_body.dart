@@ -7,31 +7,37 @@ import 'package:iam_here_doctor/Core/Const/size_config.dart';
 import 'package:get/get.dart';
 import 'package:iam_here_doctor/Features/AdminHomeScreen/home_screen.dart';
 import 'package:iam_here_doctor/Features/UserHomeScreen/Screen/home_screen.dart';
-import 'package:iam_here_doctor/Provider/auth.dart';
-import 'package:provider/provider.dart';
 
-class LoginScreenBody extends StatelessWidget {
+class LoginScreenBody extends StatefulWidget {
+  @override
+  State<LoginScreenBody> createState() => _LoginScreenBodyState();
+}
+
+class _LoginScreenBodyState extends State<LoginScreenBody> {
   GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  late final String _username;
-  late final String _password;
 
+   String? _username;
+
+   String? _password;
+
+  void goToUserScreen() {
+    Get.to(() => HomeScreenUser(), transition: Transition.fadeIn);
+  }
+
+  void goToAdminScreen() {
+    Get.to(() => const AdminHomeScreen(), transition: Transition.fadeIn);
+  }
+//this fun to go  the main page (user or admin )
+  void onSingIn() {
+    if (_username == 'user' && _password == '1234') {
+      goToUserScreen();
+    } else {
+      goToAdminScreen();
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    void submited() {
-      Provider.of<Auth>(context,listen: false).login(
-          credentials: {
-            'email':_username,
-            'password':_password
-          }
-      );
-    }
-    void goToUserScreen() {
-      Get.to(() => HomeScreenUser(), transition: Transition.fadeIn);
-    }
 
-    void goToAdminScreen() {
-      Get.to(() => const AdminHomeScreen(), transition: Transition.fadeIn);
-    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 50.0),
@@ -94,11 +100,11 @@ class LoginScreenBody extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: TextFormField(
-                onSaved: (value){
+                onSaved: (value) {
                   _username = value!;
                 },
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter your phone number',
                   border: InputBorder.none,
                 ),
@@ -125,11 +131,11 @@ class LoginScreenBody extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: TextFormField(
-                onSaved: (value){
+                onSaved: (value) {
                   _password = value!;
                 },
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter your password',
                   border: InputBorder.none,
                 ),
@@ -140,7 +146,8 @@ class LoginScreenBody extends StatelessWidget {
       ),
     );
   }
-  Widget _buildButton(){
+
+  Widget _buildButton() {
     return Container(
       width: 428,
       height: 470,
@@ -166,8 +173,7 @@ class LoginScreenBody extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-              _formState.currentState!.save();
-              // this.submited();
+                onSingIn();
               },
               child: const GeneralButton(
                 text: 'Login',
@@ -179,9 +185,4 @@ class LoginScreenBody extends StatelessWidget {
       ),
     );
   }
-
-
 }
-
-
-
